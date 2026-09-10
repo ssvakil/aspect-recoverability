@@ -1,0 +1,31 @@
+Streaming up to 500,000 interactions...
+  loaded 500,000 rows
+Balanced panel at presence >= 75%: 657 apps, 74,780 rows, window 2018-01 to 2021-12
+
+Aspect taxonomy: 10 aspects (battery, delivery, design, durability, packaging, performance, price, quality, support, usability)
+
+Aspect cells (category x aspect x month): 7,084
+  categories 46, aspects 10
+  median mentions per cell: 1
+  cells with >= 30 mentions: 0 (0.0%)
+
+Per aspect:
+             cells  qualifying  median_mentions  share
+aspect                                                
+battery        577           0              1.0    0.0
+delivery       165           0              1.0    0.0
+design        1222           0              2.0    0.0
+durability     459           0              1.0    0.0
+packaging      436           0              1.0    0.0
+performance   1260           0              2.0    0.0
+price          830           0              1.0    0.0
+quality        498           0              1.0    0.0
+support        813           0              1.0    0.0
+usability      824           0              1.0    0.0
+
+Usable aspect series (contiguous, long enough): 0
+
+No aspect series survives the density threshold.
+Aspect-level detection cannot be attempted on this panel.
+
+Saved: aspect_level_results.json
