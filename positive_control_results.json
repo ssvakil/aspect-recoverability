@@ -1,0 +1,187 @@
+{
+  "grid": [
+    {
+      "depth_sd": 0.5,
+      "duration": 2,
+      "n": 27,
+      "detected": 15,
+      "power": 0.5555555555555556,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 0.5,
+      "duration": 3,
+      "n": 27,
+      "detected": 12,
+      "power": 0.4444444444444444,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 0.5,
+      "duration": 6,
+      "n": 27,
+      "detected": 15,
+      "power": 0.5555555555555556,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 1.0,
+      "duration": 2,
+      "n": 27,
+      "detected": 15,
+      "power": 0.5555555555555556,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 1.0,
+      "duration": 3,
+      "n": 27,
+      "detected": 13,
+      "power": 0.48148148148148145,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 1.0,
+      "duration": 6,
+      "n": 27,
+      "detected": 18,
+      "power": 0.6666666666666666,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 1.5,
+      "duration": 2,
+      "n": 27,
+      "detected": 15,
+      "power": 0.5555555555555556,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 1.5,
+      "duration": 3,
+      "n": 27,
+      "detected": 16,
+      "power": 0.5925925925925926,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 1.5,
+      "duration": 6,
+      "n": 27,
+      "detected": 19,
+      "power": 0.7037037037037037,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 2.0,
+      "duration": 2,
+      "n": 27,
+      "detected": 17,
+      "power": 0.6296296296296297,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 2.0,
+      "duration": 3,
+      "n": 27,
+      "detected": 18,
+      "power": 0.6666666666666666,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 2.0,
+      "duration": 6,
+      "n": 27,
+      "detected": 20,
+      "power": 0.7407407407407407,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 3.0,
+      "duration": 2,
+      "n": 27,
+      "detected": 19,
+      "power": 0.7037037037037037,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 3.0,
+      "duration": 3,
+      "n": 27,
+      "detected": 21,
+      "power": 0.7777777777777778,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    },
+    {
+      "depth_sd": 3.0,
+      "duration": 6,
+      "n": 27,
+      "detected": 24,
+      "power": 0.8888888888888888,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0
+    }
+  ],
+  "recovery_recall": {
+    "injected": 27,
+    "detected": 22,
+    "classified_recovered": 22,
+    "recall": 1.0
+  },
+  "phi_sensitivity": [
+    {
+      "depth_sd": 2.0,
+      "duration": 3,
+      "n": 27,
+      "detected": 24,
+      "power": 0.8888888888888888,
+      "false_positive_series": 25,
+      "false_positive_rate": 0.9259259259259259,
+      "phi": 0.0
+    },
+    {
+      "depth_sd": 2.0,
+      "duration": 3,
+      "n": 27,
+      "detected": 24,
+      "power": 0.8888888888888888,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0,
+      "phi": 0.3
+    },
+    {
+      "depth_sd": 2.0,
+      "duration": 3,
+      "n": 27,
+      "detected": 20,
+      "power": 0.7407407407407407,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0,
+      "phi": 0.6
+    },
+    {
+      "depth_sd": 2.0,
+      "duration": 3,
+      "n": 27,
+      "detected": 16,
+      "power": 0.5925925925925926,
+      "false_positive_series": 27,
+      "false_positive_rate": 1.0,
+      "phi": 0.85
+    }
+  ]
+}
