@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: >-
+  Aspect-Level Sentiment Decline and Return Is Not Estimable from Two Large
+  Public Review Corpora: A Negative Feasibility Study with a Density Bound
+message: If you use this replication package, please cite the manuscript.
+type: software
+authors:
+  - family-names: Vakil
+    given-names: S.
+    orcid: https://orcid.org/0009-0009-1336-5045
+    affiliation: University of Qom
+  - family-names: Farjami
+    given-names: Y.
+    orcid: https://orcid.org/0000-0003-1908-8826
+    affiliation: University of Qom
+repository-code: https://github.com/ssvakil/aspect-recoverability
+license: MIT
+keywords:
+  - online reviews
+  - sentiment dynamics
+  - negative results
+  - survival analysis
+  - construct validity
+  - reproducibility
