@@ -61,14 +61,22 @@ def build_panel(df, presence_threshold, window_start=WINDOW_START,
 
     g = b.groupby(["app_category", "month"]).size()
     per_cat = g.groupby(level=0).size()
+    n_cat = int(per_cat.size)
+    # The denominator: category-months that actually exist in this panel.
+    # An earlier version of this study reported a share without recording it,
+    # and the share was later multiplied back out to recover a denominator that
+    # had never been measured. Logging it here removes that possibility.
+    denominator = int(len(g))
     return dict(
         window_months=window_months,
         apps_kept=int(len(kept)),
         rows=int(len(b)),
-        category_months=int(len(g)),
+        category_months=denominator,
+        denominator=denominator,
+        denominator_max=n_cat * window_months,
         qualifying=int((g >= threshold).sum()),
         share=float((g >= threshold).mean()),
-        categories=int(per_cat.size),
+        categories=n_cat,
         median_months_per_category=int(per_cat.median()),
     )
 
@@ -127,11 +135,15 @@ def run(scan):
           f"qualifying {base['qualifying']:,} ({base['share']:.1%})\n")
 
     print("Balanced panels:")
+    print(f"  {'presence':>9}  {'apps':>6}  {'rows':>8}  {'cats':>5}  "
+          f"{'cat-months':>10}  {'qualifying':>10}  {'share':>7}  {'max poss.':>9}")
     for thr in (0.5, 0.75, 0.9):
         r = build_panel(df, thr)
-        print(f"  presence >= {thr:.0%}: apps {r['apps_kept']:,}, rows {r['rows']:,}, "
-              f"categories {r['categories']}, qualifying {r['qualifying']:,} "
-              f"({r['share']:.1%})")
+        print(f"  {thr:>8.0%}  {r['apps_kept']:>6,}  {r['rows']:>8,}  "
+              f"{r['categories']:>5}  {r['denominator']:>10,}  "
+              f"{r['qualifying']:>10,}  {r['share']:>6.1%}  "
+              f"{r['denominator_max']:>9,}")
+    print("\n  cat-months is the denominator of the share and is now logged.")
 
     print("\nLongest continuous dense run per category (presence >= 75%):")
     runs = longest_dense_run(df, 0.75)
@@ -216,6 +228,20 @@ def _selftest():
     check("sparse months break the run", not runs.empty and
           runs.iloc[0]["longest_dense_run"] == 10,
           f"(got {runs.iloc[0]['longest_dense_run'] if not runs.empty else 'none'})")
+
+    # the denominator must be recorded and must bound the qualifying count
+    full = build_panel(df, 0.0)
+    check("denominator is recorded", "denominator" in full and full["denominator"] > 0,
+          f"({full.get('denominator')})")
+    check("qualifying never exceeds the denominator",
+          full["qualifying"] <= full["denominator"],
+          f"({full['qualifying']} vs {full['denominator']})")
+    check("share equals qualifying over denominator",
+          abs(full["share"] - full["qualifying"] / full["denominator"]) < 1e-9,
+          f"({full['share']:.4f} vs {full['qualifying']/full['denominator']:.4f})")
+    check("denominator never exceeds categories times months",
+          full["denominator"] <= full["denominator_max"],
+          f"({full['denominator']} vs {full['denominator_max']})")
 
     print()
     if failures:

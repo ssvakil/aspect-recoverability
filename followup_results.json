@@ -1,0 +1,433 @@
+{
+  "cohort_rates": {
+    "user_item": {
+      "pairs": 74736,
+      "repeat": 44,
+      "rate": 0.0005887390280453864
+    },
+    "user_category": {
+      "pairs": 73563,
+      "repeat": 1205,
+      "rate": 0.01638051737966097
+    },
+    "user_aspect": {
+      "pairs": 14244,
+      "repeat": 198,
+      "rate": 0.013900589721988205
+    },
+    "user_category_aspect": {
+      "pairs": 14440,
+      "repeat": 5,
+      "rate": 0.00034626038781163435
+    }
+  },
+  "star_rating": {
+    "phi": {
+      "n_series": 27,
+      "phi_mean": 0.15022140399973588,
+      "phi_weighted": 0.1666145577653742,
+      "phi_median": 0.20370287287005823,
+      "phi_min": -0.2759001639872308,
+      "phi_max": 0.494171853258037
+    },
+    "pelt_penalty": [
+      {
+        "multiplier": 2,
+        "observed": 17,
+        "null_mean": 8.27,
+        "null_sd": 2.3445895163119705,
+        "ratio": 2.055622732769045,
+        "p_empirical": 0.004975124378109453
+      },
+      {
+        "multiplier": 3,
+        "observed": 6,
+        "null_mean": 1.785,
+        "null_sd": 1.2840463387276955,
+        "ratio": 3.361344537815126,
+        "p_empirical": 0.009950248756218905
+      },
+      {
+        "multiplier": 4,
+        "observed": 3,
+        "null_mean": 0.45,
+        "null_sd": 0.6982120021884471,
+        "ratio": 6.666666666666666,
+        "p_empirical": 0.024875621890547265
+      },
+      {
+        "multiplier": 6,
+        "observed": 0,
+        "null_mean": 0.02,
+        "null_sd": 0.13999999999999999,
+        "ratio": 0.0,
+        "p_empirical": 1.0
+      }
+    ],
+    "outcomes": {
+      "total": 23,
+      "analysable": 20,
+      "censored": 3,
+      "censoring_rate": 0.13043478260869565,
+      "recovered": 20,
+      "non_recovered": 0
+    },
+    "km": [
+      {
+        "time": 1.0,
+        "at_risk": 23,
+        "events": 5,
+        "survival": 0.782608695652174,
+        "greenwood_var": 0.012077294685990338,
+        "ci_lower": 0.554206224972595,
+        "ci_upper": 0.9032089745710503
+      },
+      {
+        "time": 2.0,
+        "at_risk": 17,
+        "events": 6,
+        "survival": 0.5063938618925831,
+        "greenwood_var": 0.04416285618331654,
+        "ci_lower": 0.2875169557418717,
+        "ci_upper": 0.689735288291903
+      },
+      {
+        "time": 3.0,
+        "at_risk": 10,
+        "events": 1,
+        "survival": 0.4557544757033248,
+        "greenwood_var": 0.055273967294427656,
+        "ci_lower": 0.24353353524026458,
+        "ci_upper": 0.6458705948580654
+      },
+      {
+        "time": 4.0,
+        "at_risk": 9,
+        "events": 2,
+        "survival": 0.35447570332480816,
+        "greenwood_var": 0.0870199990404594,
+        "ci_lower": 0.16347401056843414,
+        "ci_upper": 0.5521710003329746
+      },
+      {
+        "time": 5.0,
+        "at_risk": 7,
+        "events": 1,
+        "survival": 0.30383631713554987,
+        "greenwood_var": 0.11082952284998321,
+        "ci_lower": 0.12744046499638736,
+        "ci_upper": 0.5021505190005203
+      },
+      {
+        "time": 6.0,
+        "at_risk": 6,
+        "events": 2,
+        "survival": 0.20255754475703328,
+        "greenwood_var": 0.19416285618331652,
+        "ci_lower": 0.06441325070987328,
+        "ci_upper": 0.3946853266520453
+      },
+      {
+        "time": 7.0,
+        "at_risk": 4,
+        "events": 1,
+        "survival": 0.15191815856777496,
+        "greenwood_var": 0.27749618951664984,
+        "ci_lower": 0.03841364279185254,
+        "ci_upper": 0.3363887879896293
+      },
+      {
+        "time": 11.0,
+        "at_risk": 3,
+        "events": 0,
+        "survival": 0.15191815856777496,
+        "greenwood_var": 0.27749618951664984,
+        "ci_lower": 0.03841364279185254,
+        "ci_upper": 0.3363887879896293
+      },
+      {
+        "time": 12.0,
+        "at_risk": 2,
+        "events": 1,
+        "survival": 0.07595907928388748,
+        "greenwood_var": 0.7774961895166499,
+        "ci_lower": 0.006475916538674721,
+        "ci_upper": 0.26758834945071935
+      },
+      {
+        "time": 14.0,
+        "at_risk": 1,
+        "events": 1,
+        "survival": 0.0,
+        "greenwood_var": 0.7774961895166499,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0
+      }
+    ],
+    "median_recovery": 3.0,
+    "bootstrap": {
+      "replicates": 999,
+      "observed": 23,
+      "null_mean": 28.38938938938939,
+      "null_sd": 3.772796776738002,
+      "mcse_mean": 0.11936600756633768,
+      "ratio": 0.8101618419660802,
+      "p_empirical": 0.948,
+      "ci_lower": 21.0,
+      "ci_upper": 36.0
+    },
+    "ratio_ci": {
+      "lower": 0.6388888888888888,
+      "upper": 1.15
+    },
+    "pelt": {
+      "observed": 6,
+      "null_mean": 1.765,
+      "null_sd": 1.3452787815170506,
+      "ratio": 3.3994334277620397,
+      "z": 3.1480463813041446,
+      "p_empirical": 0.015
+    },
+    "block_sensitivity": [
+      {
+        "block": 3,
+        "observed": 23,
+        "null_mean": 29.335,
+        "null_sd": 4.181240844534072,
+        "ratio": 0.7840463610022158
+      },
+      {
+        "block": 6,
+        "observed": 23,
+        "null_mean": 28.395,
+        "null_sd": 3.496995138686927,
+        "ratio": 0.8100017608733933
+      },
+      {
+        "block": 12,
+        "observed": 23,
+        "null_mean": 27.0,
+        "null_sd": 3.3286633954186478,
+        "ratio": 0.8518518518518519
+      }
+    ]
+  },
+  "lexicon": {
+    "phi": {
+      "n_series": 27,
+      "phi_mean": 0.012061749380304175,
+      "phi_weighted": 0.04567040759305272,
+      "phi_median": -0.013790157682042578,
+      "phi_min": -0.49117034955372224,
+      "phi_max": 0.4116624939737386
+    },
+    "pelt_penalty": [
+      {
+        "multiplier": 2,
+        "observed": 5,
+        "null_mean": 4.94,
+        "null_sd": 1.9663163529808727,
+        "ratio": 1.0121457489878543,
+        "p_empirical": 0.5621890547263682
+      },
+      {
+        "multiplier": 3,
+        "observed": 1,
+        "null_mean": 0.845,
+        "null_sd": 0.8893677529571218,
+        "ratio": 1.183431952662722,
+        "p_empirical": 0.5771144278606966
+      },
+      {
+        "multiplier": 4,
+        "observed": 0,
+        "null_mean": 0.17,
+        "null_sd": 0.4136423575989287,
+        "ratio": 0.0,
+        "p_empirical": 1.0
+      },
+      {
+        "multiplier": 6,
+        "observed": 0,
+        "null_mean": 0.0,
+        "null_sd": 0.0,
+        "ratio": NaN,
+        "p_empirical": 1.0
+      }
+    ],
+    "outcomes": {
+      "total": 29,
+      "analysable": 19,
+      "censored": 10,
+      "censoring_rate": 0.3448275862068966,
+      "recovered": 12,
+      "non_recovered": 7
+    },
+    "km": [
+      {
+        "time": 1.0,
+        "at_risk": 29,
+        "events": 1,
+        "survival": 0.9655172413793104,
+        "greenwood_var": 0.0012315270935960591,
+        "ci_lower": 0.7794631923106582,
+        "ci_upper": 0.9950697827820698
+      },
+      {
+        "time": 2.0,
+        "at_risk": 27,
+        "events": 2,
+        "survival": 0.8939974457215837,
+        "greenwood_var": 0.004194490056559022,
+        "ci_lower": 0.7061923320887571,
+        "ci_upper": 0.9645501857917803
+      },
+      {
+        "time": 3.0,
+        "at_risk": 23,
+        "events": 1,
+        "survival": 0.8551279915597757,
+        "greenwood_var": 0.006170774641539259,
+        "ci_lower": 0.6579807159194527,
+        "ci_upper": 0.9431632993414681
+      },
+      {
+        "time": 5.0,
+        "at_risk": 21,
+        "events": 1,
+        "survival": 0.8144076110093101,
+        "greenwood_var": 0.008551727022491639,
+        "ci_lower": 0.6087327672589229,
+        "ci_upper": 0.9185977935175433
+      },
+      {
+        "time": 6.0,
+        "at_risk": 20,
+        "events": 1,
+        "survival": 0.7736872304588446,
+        "greenwood_var": 0.01118330596986006,
+        "ci_lower": 0.562412589556326,
+        "ci_upper": 0.8919046103939974
+      },
+      {
+        "time": 7.0,
+        "at_risk": 19,
+        "events": 1,
+        "survival": 0.7329668499083791,
+        "greenwood_var": 0.014107282578047194,
+        "ci_lower": 0.5182767763003291,
+        "ci_upper": 0.8634368127863482
+      },
+      {
+        "time": 8.0,
+        "at_risk": 18,
+        "events": 1,
+        "survival": 0.6922464693579136,
+        "greenwood_var": 0.017375256434256345,
+        "ci_lower": 0.47593382047926003,
+        "ci_upper": 0.8334263859377237
+      },
+      {
+        "time": 10.0,
+        "at_risk": 17,
+        "events": 0,
+        "survival": 0.6922464693579136,
+        "greenwood_var": 0.017375256434256345,
+        "ci_lower": 0.47593382047926003,
+        "ci_upper": 0.8334263859377237
+      },
+      {
+        "time": 11.0,
+        "at_risk": 16,
+        "events": 0,
+        "survival": 0.6922464693579136,
+        "greenwood_var": 0.017375256434256345,
+        "ci_lower": 0.47593382047926003,
+        "ci_upper": 0.8334263859377237
+      },
+      {
+        "time": 12.0,
+        "at_risk": 15,
+        "events": 1,
+        "survival": 0.6460967047340527,
+        "greenwood_var": 0.022137161196161107,
+        "ci_lower": 0.42673491685147336,
+        "ci_upper": 0.7992748760616674
+      },
+      {
+        "time": 14.0,
+        "at_risk": 13,
+        "events": 2,
+        "survival": 0.5466972116980445,
+        "greenwood_var": 0.036123175182175095,
+        "ci_lower": 0.3265883516038446,
+        "ci_upper": 0.7219114575522018
+      },
+      {
+        "time": 15.0,
+        "at_risk": 9,
+        "events": 1,
+        "survival": 0.48595307706492846,
+        "greenwood_var": 0.05001206407106398,
+        "ci_lower": 0.26588829245518364,
+        "ci_upper": 0.6749420892685271
+      },
+      {
+        "time": 18.0,
+        "at_risk": 7,
+        "events": 0,
+        "survival": 0.48595307706492846,
+        "greenwood_var": 0.05001206407106398,
+        "ci_lower": 0.26588829245518364,
+        "ci_upper": 0.6749420892685271
+      }
+    ],
+    "median_recovery": 15.0,
+    "bootstrap": {
+      "replicates": 999,
+      "observed": 29,
+      "null_mean": 26.187187187187188,
+      "null_sd": 3.7285117131620185,
+      "mcse_mean": 0.1179648901601526,
+      "ratio": 1.107411796185161,
+      "p_empirical": 0.251,
+      "ci_lower": 19.0,
+      "ci_upper": 33.0
+    },
+    "ratio_ci": {
+      "lower": 0.8285714285714286,
+      "upper": 1.5263157894736843
+    },
+    "pelt": {
+      "observed": 1,
+      "null_mean": 0.795,
+      "null_sd": 0.8561395914218662,
+      "ratio": 1.2578616352201257,
+      "z": 0.2394469337173608,
+      "p_empirical": 0.555
+    },
+    "block_sensitivity": [
+      {
+        "block": 3,
+        "observed": 29,
+        "null_mean": 26.885,
+        "null_sd": 3.5428484302888266,
+        "ratio": 1.0786684024549005
+      },
+      {
+        "block": 6,
+        "observed": 29,
+        "null_mean": 26.665,
+        "null_sd": 3.809563623303856,
+        "ratio": 1.0875679729983125
+      },
+      {
+        "block": 12,
+        "observed": 29,
+        "null_mean": 27.72,
+        "null_sd": 3.2220490374915154,
+        "ratio": 1.0461760461760463
+      }
+    ]
+  }
+}

@@ -152,6 +152,47 @@ def months_above_threshold(df, threshold=30):
                 share=float((pm >= threshold).mean()))
 
 
+def _match_parquet(files, config):
+    """
+    Parquet files belonging to one config.
+
+    Matching is on the path, not on a guessed directory layout, because a
+    hard-coded path that silently matches the wrong files would be worse than
+    an error. Both `config/...parquet` and `...config...parquet` are accepted.
+    """
+    exact = [f for f in files
+             if f.startswith(config + "/") and f.endswith(".parquet")]
+    if exact:
+        return sorted(exact)
+    return sorted(f for f in files
+                  if config in f and f.endswith(".parquet"))
+
+
+def _match_jsonl(files, category):
+    """
+    The raw review file for one category.
+
+    The repository stores reviews at raw/review_categories/<Category>.jsonl and
+    metadata at raw/meta_categories/meta_<Category>.jsonl. These are different
+    things: the metadata file describes products and contains no reviews.
+    Loading the wrong one yields a valid dataframe with no user, timestamp or
+    text column, which is exactly the failure this project hit once already.
+    Matching is therefore anchored on the review directory, never on the
+    category name alone.
+    """
+    target = f"raw/review_categories/{category}.jsonl"
+    if target in files:
+        return [target]
+    return sorted(f for f in files
+                  if f.startswith("raw/review_categories/")
+                  and f.endswith(f"/{category}.jsonl"))
+
+
+def _prefixes(files, limit=12):
+    """First path component of each file, for diagnostics when matching fails."""
+    return sorted({f.split("/")[0] for f in files})[:limit]
+
+
 def open_stream(config):
     """
     Open a streaming iterator over one config, trying each loading route in
@@ -176,26 +217,65 @@ def open_stream(config):
     except Exception as e:
         errors.append(f"standard: {type(e).__name__}: {e}")
 
-    # Route 2: parquet conversion branch, paths discovered from the hub
+    # Route 2: native parquet files on the main branch. The repository was
+    # converted to parquet, so these exist even though the legacy loading
+    # script is still present and blocks Route 1 on datasets>=4.
+    try:
+        from huggingface_hub import HfApi
+        api = HfApi()
+        files = api.list_repo_files(DATASET, repo_type="dataset")
+        matches = _match_parquet(files, config)
+        if matches:
+            urls = [f"hf://datasets/{DATASET}/{f}" for f in matches]
+            print(f"  loader route: main-branch parquet ({len(urls)} files)")
+            return load_dataset("parquet", data_files=urls, split="train",
+                                streaming=True)
+        errors.append(
+            f"main-branch parquet: no files matched config '{config}'. "
+            f"Prefixes present: {_prefixes(files)}")
+    except Exception as e:
+        errors.append(f"main-branch parquet: {type(e).__name__}: {e}")
+
+    # Route 3: the parquet conversion branch. This revision does not exist for
+    # every repository, so a 404 here is expected rather than exceptional.
     try:
         from huggingface_hub import HfApi
         api = HfApi()
         files = api.list_repo_files(DATASET, repo_type="dataset",
                                     revision="refs/convert/parquet")
-        matches = [f for f in files
-                   if f.startswith(config + "/") and f.endswith(".parquet")]
+        matches = _match_parquet(files, config)
         if not matches:
             raise FileNotFoundError(
-                f"no parquet files found under '{config}/' on the conversion "
-                f"branch; available prefixes: "
-                f"{sorted({f.split('/')[0] for f in files})[:10]}")
+                f"no parquet under '{config}' on the conversion branch; "
+                f"prefixes: {_prefixes(files)}")
         urls = [f"hf://datasets/{DATASET}@refs/convert/parquet/{f}"
                 for f in matches]
-        print(f"  loader route: parquet branch ({len(urls)} files)")
+        print(f"  loader route: conversion branch ({len(urls)} files)")
         return load_dataset("parquet", data_files=urls, split="train",
                             streaming=True)
     except Exception as e:
-        errors.append(f"parquet branch: {type(e).__name__}: {e}")
+        errors.append(f"conversion branch: {type(e).__name__}: {e}")
+
+    # Route 4: raw JSONL. The repository keeps reviews as one JSON Lines file
+    # per category under raw/review_categories/, which the loading script used
+    # to wrap. Reading it directly bypasses the script entirely.
+    try:
+        from huggingface_hub import HfApi
+        api = HfApi()
+        files = api.list_repo_files(DATASET, repo_type="dataset")
+        category = config.replace("raw_review_", "")
+        matches = _match_jsonl(files, category)
+        if not matches:
+            raise FileNotFoundError(
+                f"no review JSONL for category '{category}'; "
+                f"review files present: "
+                f"{[f for f in files if f.startswith('raw/review_categories/')][:5]}")
+        urls = [f"hf://datasets/{DATASET}/{f}" for f in matches]
+        print(f"  loader route: raw JSONL ({matches[0]})")
+        return load_dataset("json", data_files=urls, split="train",
+                            streaming=True)
+    except Exception as e:
+        errors.append(f"raw JSONL: {type(e).__name__}: {e}")
 
     raise RuntimeError(
         "could not open the dataset. Routes tried:\n  - " +
@@ -326,6 +406,46 @@ def _selftest():
     check("bad timestamp dropped", rep["bad_timestamps"] == 1)
     check("exact duplicate removed", rep["duplicates_removed"] == 1)
     check("two rows survive", len(cleaned) == 2, f"(got {len(cleaned)})")
+
+    # parquet path matching: a wrong match would load the wrong config
+    # silently, which is worse than failing to load at all
+    files = ["README.md",
+             "raw_review_All_Beauty/full-00000.parquet",
+             "raw_review_All_Beauty/full-00001.parquet",
+             "raw_review_Electronics/full-00000.parquet",
+             "raw_meta_All_Beauty/full-00000.parquet"]
+    m = _match_parquet(files, "raw_review_All_Beauty")
+    check("parquet match returns only the requested config",
+          m == sorted(files[1:3]), f"(got {m})")
+    check("parquet match excludes the metadata config",
+          not any("raw_meta" in f for f in m))
+    check("parquet match excludes other categories",
+          not any("Electronics" in f for f in m))
+    check("unknown config matches nothing",
+          _match_parquet(files, "raw_review_Nonexistent") == [])
+    check("substring fallback handles a flat layout",
+          _match_parquet(["data/raw_review_All_Beauty-0.parquet"],
+                         "raw_review_All_Beauty") ==
+          ["data/raw_review_All_Beauty-0.parquet"])
+
+    # JSONL path matching: the metadata file must never be mistaken for the
+    # review file, since it loads cleanly but contains no reviews
+    jl = ["raw/review_categories/All_Beauty.jsonl",
+          "raw/review_categories/Electronics.jsonl",
+          "raw/meta_categories/meta_All_Beauty.jsonl",
+          "README.md"]
+    check("jsonl match finds the review file",
+          _match_jsonl(jl, "All_Beauty") == ["raw/review_categories/All_Beauty.jsonl"],
+          f"(got {_match_jsonl(jl, 'All_Beauty')})")
+    check("jsonl match never returns the metadata file",
+          all("meta_categories" not in f for f in _match_jsonl(jl, "All_Beauty")))
+    check("jsonl match does not return another category",
+          all("Electronics" not in f for f in _match_jsonl(jl, "All_Beauty")))
+    check("jsonl match on an absent category returns nothing",
+          _match_jsonl(jl, "Nonexistent") == [])
+    check("metadata-only repository yields no review file",
+          _match_jsonl(["raw/meta_categories/meta_All_Beauty.jsonl"],
+                       "All_Beauty") == [])
 
     # repeat-review rate
     single = pd.DataFrame({"parent_asin": ["A"] * 20,
